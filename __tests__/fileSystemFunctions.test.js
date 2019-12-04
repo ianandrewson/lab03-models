@@ -15,8 +15,7 @@ jest.mock('fs', () => ({
     promises: {
         mkdir: jest.fn(() => Promise.resolve(mockPath)),
         writeFile: jest.fn(() => Promise.resolve(mockFile, mockDogJson)),
-        readFile: jest.fn(() => Promise.revolve(mockFile)),
-        
+        readFile: jest.fn(() => Promise.resolve(JSON.stringify(mockDogJson)))
     }
 }));
 
@@ -29,14 +28,15 @@ describe('fileSystemFunctions tests', () => {
     });
     it('will write a JSON object to a file', () => {
         return fsFuncs.writeJSON(mockFile, mockDogJson)
-            .then(() => {
+            .then(response => {
                 expect(fs.writeFile).toHaveBeenLastCalledWith(mockFile, JSON.stringify(mockDogJson));
             });
     });
     it('will read a JSON object from a file', () => {
         return fsFuncs.readJSON(mockFile)
-            .then(() => {
-                expect(fs.readFile).toHaveBeenLastCalledWith(mockFile);
+            .then(response => {
+                expect(fs.readFile).toHaveBeenLastCalledWith(mockFile, 'utf8');
+                expect(response).toEqual(mockDogJson);
             });
     });
 });
