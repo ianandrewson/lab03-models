@@ -4,11 +4,18 @@ const fsFuncs = require('../lib/fileSystemFunctions.js');
 const mockPath = './my-test-directory/child/more';
 
 const mockFile = './my-test-directory/child/more/dog';
+const mockAnotherFile = './my-test-directory/child/more/person';
 
 const mockDogJson = {
     name: 'spot',
     age: 8,
     weight: '20 lbs'
+};
+
+const mockPersonJson = {
+    name: 'Bob',
+    occupation: 'builder',
+    canHeFixIt: true
 };
 
 jest.mock('fs', () => ({
@@ -28,7 +35,7 @@ describe('fileSystemFunctions tests', () => {
     });
     it('will write a JSON object to a file', () => {
         return fsFuncs.writeJSON(mockFile, mockDogJson)
-            .then(response => {
+            .then(() => {
                 expect(fs.writeFile).toHaveBeenLastCalledWith(mockFile, JSON.stringify(mockDogJson));
             });
     });
@@ -37,6 +44,15 @@ describe('fileSystemFunctions tests', () => {
             .then(response => {
                 expect(fs.readFile).toHaveBeenLastCalledWith(mockFile, 'utf8');
                 expect(response).toEqual(mockDogJson);
+            });
+    });
+    it('will read JSON from all files in a directory', () => {
+        return fsFuncs.readDirectoryJSON(mockPath)
+            .then(response => {
+                console.log(response);
+                expect(fs.readdir).toHaveBeenLastCalledWith(mockPath);
+                expect(response.length).toEqual(2);
+                expect(response[1].name).toBe('Bob');
             });
     });
 });
