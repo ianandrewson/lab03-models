@@ -1,4 +1,4 @@
-PR Link: 
+PR Link: https://github.com/ianandrewson/lab03-models/pull/1
 
 # lab03-models
 
@@ -26,13 +26,13 @@ File System Functions
     deleteFile - delete a file
 
 Testing
-
 These tests will be asynchronous tests. Since we’ll be writing to the file system for these tests, we’ll want to make sure we clean up our mess inside of an afterAll or afterEach. Also, do any setup inside of a beforeAll or beforeEach
-Implementation
 
+Implementation
 Use fsPromises (const fs = require('fs').promises) to write your functions. When writing JSON make sure to JSON.stringify (we can only write strings into files). When reading JSON make sure to JSON.parse.
 
 NOTE it’s ok if readDirectoryJSON returns an array of objects in a different order each time
+
 Model class
 
     create
