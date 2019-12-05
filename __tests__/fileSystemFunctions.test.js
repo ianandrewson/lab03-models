@@ -62,4 +62,10 @@ describe('fileSystemFunctions tests', () => {
                 expect(response.weight).toEqual('30 lbs');
             });
     });
+    it('will delete a file at the specified path', () => {
+        return fsFuncs.deleteFile(mockFile)
+            .then(() => {
+                expect(mockFile).toBeFalsey();
+            });
+    });
 });
