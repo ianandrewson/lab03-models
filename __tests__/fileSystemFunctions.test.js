@@ -22,7 +22,8 @@ jest.mock('fs', () => ({
         mkdir: jest.fn(() => Promise.resolve(mockPath)),
         writeFile: jest.fn(() => Promise.resolve(mockFile, mockDogJson)),
         readFile: jest.fn(() => Promise.resolve(JSON.stringify(mockDogJson))),
-        readdir: jest.fn(() => Promise.resolve(mockArray))
+        readdir: jest.fn(() => Promise.resolve(mockArray)),
+        unlink: jest.fn(() => Promise.resolve())
     }
 }));
 
@@ -63,9 +64,13 @@ describe('fileSystemFunctions tests', () => {
             });
     });
     it('will delete a file at the specified path', () => {
-        return fsFuncs.deleteFile(mockFile)
-            .then(() => {
-                expect(mockFile).toBeFalsey();
+        return fsFuncs.deleteFile(mockPath)
+            .then(response => {
+                expect(response).toEqual({
+                    name: 'spot',
+                    age: 8,
+                    weight: '20 lbs'
+                });
             });
     });
 });
