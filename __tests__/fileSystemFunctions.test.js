@@ -15,7 +15,7 @@ const mockDogNewAge = {
     weight: '30 lbs'
 };
 
-const mockArray = [mockFile, mockAnotherFile ];
+const mockArray = [mockFile, mockAnotherFile];
 
 jest.mock('fs', () => ({
     promises: {
