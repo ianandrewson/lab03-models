@@ -11,7 +11,8 @@ const mockDogJson = {
     weight: '20 lbs'
 };
 const mockDogNewAge = {
-    age: 10
+    age: 10,
+    weight: '30 lbs'
 };
 
 const mockArray = [mockFile, mockAnotherFile ];
@@ -22,6 +23,7 @@ jest.mock('fs', () => ({
         writeFile: jest.fn(() => Promise.resolve(mockFile, mockDogJson)),
         readFile: jest.fn(() => Promise.resolve(JSON.stringify(mockDogJson))),
         readdir: jest.fn(() => Promise.resolve(mockArray))
+    }
 }));
 
 describe('fileSystemFunctions tests', () => {
@@ -55,9 +57,9 @@ describe('fileSystemFunctions tests', () => {
     it('will update the JSON within a file', () => {
         return fsFuncs.updateJSON(mockFile, mockDogNewAge)
             .then(response => {
-                console.log(response);
                 expect(response.age).toEqual(10);
                 expect(response.name).toEqual('spot');
+                expect(response.weight).toEqual('30 lbs');
             });
     });
 });
